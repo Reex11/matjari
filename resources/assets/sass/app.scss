@@ -1,9 +1,84 @@
 
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css?family=Tajawal:100,300,600');
 
 // Variables
 @import "variables";
 
 // Bootstrap
-@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+@import '~bootstrap/scss/bootstrap';
+//@import '~bootstrap-4.2.1-rtl/scss/bootstrap';
+
+
+
+.navbar-laravel {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+html, body {
+    direction: rtl;
+    background-color: #fff;
+    color: #636b6f;
+    font-family: 'Tajawal', sans-serif;
+    font-weight: 100;
+    text-align:right;
+    margin: 0;
+}
+
+.navbar {
+    padding: 1.5vw;
+    border-bottom: 2px solid #77dd99;
+    display:block;
+}
+
+.flex-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.content {
+    padding: 30px;
+}
+
+.title {
+    font-size: 84px;
+}
+
+.links > a {
+    color: #636b6f;
+    padding: 0 25px;
+    font-size: 20px;
+    font-weight: 600;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.nav-links > a {
+    color: #77dd99;
+    padding: 0 25px;
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.week-table th, .week-table td {
+    padding: 1.25rem;
+
+}
+table.week-table {
+    border: solid 3px #454d55;
+    border-left: 0;
+}
+
+.week-day {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+td.table-pos-2 , td.thick-border-left , th.thick-border-left {
+    border-left: solid 3px #454d55;
+}

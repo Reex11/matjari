@@ -7,7 +7,7 @@ require 'recipe/laravel.php';
 set('application', 'alamermarket');
 
 // Project repository
-set('repository', 'git@bitbucket.org:reex11/alamermarket.git');
+set('repository', 'reex11@bitbucket.org:reex11/alamermarket.git');
 
 // [Optional] Allocate tty for git clone. Default value is false.
 set('git_tty', true); 
@@ -19,13 +19,12 @@ add('shared_dirs', []);
 // Writable dirs by web server 
 add('writable_dirs', []);
 
-
 // Hosts
 
-host('i.reexdesign.com')
-	->user('laravel')
+host('46.101.229.184')
+	->user('deployer')
     ->identityFile('~/.ssh/deployerkey')
-    ->set('deploy_path', '/var/www/alamermarket');
+    ->set('deploy_path', '/var/www/alamer');
 //    ->set('deploy_path', '~/{{application}}');    
     
 // Tasks

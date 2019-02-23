@@ -11,6 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'PagesController@index');
+
+Route::get('/test', 'PagesController@test');
+
+Route::get('/employees/{json?}','EmployeesController@index');
+
+Route::get('/shifts/{weeknum?}/{json?}', 'ShiftsController@get_week');
+
+Route::get('/test/create_week', 'ShiftsController@create_week');
