@@ -10,7 +10,7 @@ set('application', 'alamermarket');
 set('repository', 'reex11@bitbucket.org:reex11/alamermarket.git');
 
 // [Optional] Allocate tty for git clone. Default value is false.
-set('git_tty', true); 
+set('git_tty', false); 
 
 // Shared files/dirs between deploys 
 add('shared_files', []);
@@ -24,9 +24,10 @@ add('writable_dirs', []);
 host('46.101.229.184')
 	->user('deployer')
     ->identityFile('~/.ssh/deployerkey')
-    ->set('deploy_path', '/var/www/alamer');
-//    ->set('deploy_path', '~/{{application}}');    
-    
+    ->set('deploy_path', '/var/www/alamer')
+//    ->set('deploy_path', '~/{{application}}');
+	->multiplexing(true);
+
 // Tasks
 
 task('build', function () {

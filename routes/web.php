@@ -17,6 +17,7 @@ Route::get('/test', 'PagesController@test');
 
 Route::get('/employees/{json?}','EmployeesController@index');
 
-Route::get('/shifts/{weeknum?}/{json?}', 'ShiftsController@get_week');
+Route::get('/shifts/{year}/{weeknum}/edit', 'ShiftsController@edit_week');
+Route::get('/shifts/{year?}/{weeknum?}/{json?}', 'ShiftsController@view_week');
 
 Route::get('/test/create_week', 'ShiftsController@create_week');

@@ -7,6 +7,41 @@ use App\Shift;
 class ShiftsController extends Controller
 {
     
+	// views
+
+	public function view_week($year = "current", $weeknum = "current",$json=false)
+	{
+		if ($weeknum == "current") {
+			$weeknum = $this->current_week();
+		}
+		if ($year == "current") {
+			$year = date("Y");
+		}
+
+		$shifts = $this->get_week($year,$weeknum);
+		$employees = \App\Employee::all()->where('isCashier',true);
+
+		if ($json==="json") return $shifts;
+		else return view("shifts.week-view",compact('shifts','employees','weeknum','year'));
+	}
+
+	public function edit_week($year = "current", $weeknum = "current")
+	{
+		if ($weeknum == "current") {
+			$weeknum = $this->current_week();
+		}
+		if ($year == "current") {
+			$year = date("Y");
+		}
+
+		$shifts = $this->get_week($year,$weeknum);
+		$employees = \App\Employee::all()->where('isCashier',true);
+
+		return view("shifts.week-edit",compact('shifts','employees','weeknum','year'));
+	}
+
+	// workers
+
 	public function day($num="all")
 	{
 
@@ -27,27 +62,22 @@ class ShiftsController extends Controller
 
 	}
 
-	public function current_week()
-	{
-		return date("W",strtotime(date("w")==0?"+7 day":"+0 day"));
-	}
-
-
-	public function get_week($weeknum = "current",$json=false)
+	public function get_week($year = "current",$weeknum = "current")
 	{
 		if ($weeknum == "current") {
 			$weeknum = $this->current_week();
 		}
+		if ($year == "current") {
+			$year = date("Y");
+		}
 
-		$shifts = Shift::orderBy("day")->orderBy("period")->orderBy("pos")->get()->where('week',$weeknum);
-		$employees = \App\Employee::all()->where('isCashier',true);
-
-		if ($json==="json") return $shifts;
-		else return view("shifts.week",compact('shifts','employees','weeknum'));
+		$weeknum = (int)$weeknum;
+		$year = (int)$year;
+		
+		return Shift::orderBy("day")->orderBy("period")->orderBy("pos")->get()->where('week',$weeknum)->where('year',$year);
 	}
 
-
-	public function create_week($year= NULL , $weeknum=NULL)
+	public static function create_week($year= NULL , $weeknum=NULL)
 	{
 		
 		# Get Next Week's Number
@@ -58,9 +88,9 @@ class ShiftsController extends Controller
 			$year = date("Y");
 		}
 
-		$days = 7;
-		$periods = 3;
-		$poss = 2;
+		$days = 7; // TODO: TO BE CHANGED TO DEFAULT VALUE SETTING
+		$periods = 3; // TODO: TO BE CHANGED TO DEFAULT VALUE SETTING
+		$poss = 2; // TODO: TO BE CHANGED TO DEFAULT VALUE SETTING
 
 		for ($day=1; $day <= $days ; $day++) { 
 		 for ($period=1; $period <= $periods; $period++) { 
@@ -73,23 +103,35 @@ class ShiftsController extends Controller
 			  	$shift->day = $day;
 			  	$shift->period = $period;
 			  	$shift->pos = $pos;
-			  	$shift->employee = NULL; # TODO: REPEAT LAST WEEKS VALUE;
-			  	$shift->value = 75; # TODO: SAME ^
+			  	$shift->employee = NULL; // TODO: REPEAT LAST WEEKS VALUE;
+			  	$shift->value = 75; // TODO: TO BE CHANGED TO DEFAULT VALUE SETTING
 			  	$shift->save();
 			}
 			catch(\Exception $e) {
 		  	    echo $e->getMessage();   // insert query
 		  	}
 
-		  	
-
 		  }
 		 }
 		}
 
-		return view("test");
 	}
 
+
+	// HELPERS
+
+	public function current_week()
+	{
+		return date("W",strtotime(date("w")==0?"+7 day":"+0 day"));
+	}
+
+	// public function isset_week($weeknum)
+	// {
+	// 	if ($weeknum == NULL) {
+	// 		$weeknum = Shift::max('week')+1;
+	// 	}
+	// 	return date("W",strtotime(date("w")==0?"+7 day":"+0 day"));
+	// }
 	
 
 

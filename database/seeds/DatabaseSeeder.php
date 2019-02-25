@@ -11,6 +11,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        //$this->call(ShiftsTableSeeder::class);
+        $current_week = date("W",strtotime(date("w")==0?"+7 day":"+0 day"));
+        \App\Http\Controllers\ShiftsController::create_week(date('y'),$current_week);
     }
 }
