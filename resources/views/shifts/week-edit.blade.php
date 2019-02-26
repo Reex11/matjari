@@ -90,7 +90,6 @@
 
 			@endforeach
 
-
 		</tr>
 	@endforeach
 

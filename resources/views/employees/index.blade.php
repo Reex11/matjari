@@ -5,7 +5,7 @@
 @section('page-title','الموظفين')
 
 @section('page-nav')
-	<a class="btn btn-outline-info inline-btn" href="/employees/new">موظف جديد</a>
+	<a class="btn btn-outline-info inline-btn" href="/employees/create">موظف جديد</a>
 	<a class="btn btn-outline-info inline-btn" href="/employee/rewards">المكافئات والخصم</a>
 @endsection
 
