@@ -24,7 +24,7 @@
 		</div>
 		<div class="form-check form-check-switch form-check-primary">
 			<span class="switch">
-			  	<input type="checkbox" class="switch" name="isCashier" id="isCashier">
+			  	<input type="checkbox" class="switch" name="isCashier" id="isCashier" checked>
 				<label for="isCashier">كاشير ؟</label>
 			</span>
 		</div>
