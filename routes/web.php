@@ -14,12 +14,19 @@
 Route::get('/', 'PagesController@index');
 
 
-Route::post('/employees','EmployeesController@store');
-Route::get('/employees/create','EmployeesController@create');
-Route::get('/employees/{json?}','EmployeesController@index');
 
+// Route::get('/employees/create','EmployeesController@create');
+// Route::post('/employees','EmployeesController@store');
 
-Route::post('/shifts/{year}/{weeknum}/edit', 'ShiftsController@update_week');
+// Route::get('/employees/{json?}/edit','EmployeesController@edit');
+// Route::patch('/employees/{json?}','EmployeesController@update');
+
+// Route::get('/employees','EmployeesController@index');
+// Route::get('/employees/{employee}','EmployeesController@view');
+
+Route::resource('employees', 'EmployeesController');
+
+Route::patch('/shifts/{year}/{weeknum}', 'ShiftsController@update_week');
 Route::get('/shifts/{year}/{weeknum}/edit', 'ShiftsController@edit_week');
 Route::get('/shifts/{year?}/{weeknum?}/{json?}', 'ShiftsController@view_week');
 
