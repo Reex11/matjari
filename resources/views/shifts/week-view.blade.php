@@ -6,7 +6,7 @@
 
 @section('page-nav')
 	<a class="btn btn-outline-info inline-btn " href="/shifts/{{$year}}/{{$weeknum}}/edit" ><i class="fas fa-pencil-alt ml-2"></i>تعديل الأسبوع</a>
-	<a class="btn btn-outline-info inline-btn " href="#" disabled><i class="fas fa-plus ml-2"></i>إضافة أسبوع</a>
+	<a class="btn btn-outline-info inline-btn " href="/shifts/create" disabled><i class="fas fa-plus ml-2"></i>إضافة أسبوع</a>
 @endsection
 
 

@@ -5,8 +5,11 @@
 @section('page-title',' تعديل جدول الأسبوع  '.$weeknum.' - '.$year)
 
 @section('page-nav')
-	<form class="form-inline table-responsive-lg" method="POST" action="/shifts/{{$year}}/{{ $weeknum }}/edit/">
+	<form class="form-inline table-responsive-lg" method="POST" action="/shifts/{{$year}}/{{ $weeknum }}">
 	{{ csrf_field() }}
+	{{ method_field('PATCH') }}
+	<input type="hidden" name="year" value="{{$year}}">
+	<input type="hidden" name="weeknum" value="{{$weeknum}}">
 	<input type="submit" class="btn font-weight-bold btn-outline-success inline-btn ml-2" value="تطبيق التعديلات" >
 	<a class="btn font-weight-bold btn-outline-danger inline-btn " href="/shifts/{{$year}}/{{$weeknum}}" >إلغاء </a>
 @endsection
@@ -65,7 +68,7 @@
 							{{-- Shift Value --}}
 									<div class="from-group col-sm-10">
 										<label for="shift-value-{{$shift->id}}" class="sr-only">قيمة الدورية</label>
-										<input class="form-control form-control mb-1 shift-value" style="width:100%;" name="shift-value-{{$shift->id}}" type="number" step="0.25" placeholder="قيمة الوردية" value="{{$shift->value}}">
+										<input class="form-control form-control mb-1 shift-value" style="width:100%;" name="value-{{$shift->id}}" type="number" step="0.25" placeholder="قيمة الوردية" value="{{$shift->value}}">
 								
 							{{-- Cashiers List --}}
 										<label for="employee-{{$shift->id}}" class="sr-only">الكاشير</label>

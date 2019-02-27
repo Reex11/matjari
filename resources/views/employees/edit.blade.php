@@ -35,7 +35,6 @@
 	</form>
 </div>
 
-
 @endsection
 
 @section('custom-js')

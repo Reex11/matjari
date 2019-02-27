@@ -26,8 +26,8 @@ Route::get('/', 'PagesController@index');
 
 Route::resource('employees', 'EmployeesController');
 
-Route::patch('/shifts/{year}/{weeknum}', 'ShiftsController@update_week');
-Route::get('/shifts/{year}/{weeknum}/edit', 'ShiftsController@edit_week');
-Route::get('/shifts/{year?}/{weeknum?}/{json?}', 'ShiftsController@view_week');
-
-Route::get('/test/create_week', 'ShiftsController@create_week');
+Route::get('/shifts/create/{year?}/{weeknum?}/{fromyear?}/{fromweeknum?}', 'ShiftsController@create');
+Route::get('/shifts/{year}/{weeknum}/edit', 'ShiftsController@edit');
+Route::patch('/shifts/{year}/{weeknum}', 'ShiftsController@update');
+Route::get('/shifts/{year?}/{weeknum?}', 'ShiftsController@show');
+//Route::get('/test/create_week', 'ShiftsController@create_week');
