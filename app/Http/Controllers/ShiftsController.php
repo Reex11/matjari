@@ -74,7 +74,7 @@ class ShiftsController extends Controller
 			$year = date("Y");
 
 		if ($fromweeknum == NULL)
-			$fromweeknum = $this->current_week() - 1;
+			$fromweeknum = Shift::max('week');
 
 		if ($fromyear == NULL)
 			$fromyear = date("Y");
@@ -90,10 +90,10 @@ class ShiftsController extends Controller
 
 		if ( is_null(Shift::where("year",$year)->where("week",$weeknum)->first()) ) {
 
-			if ($create_default_values) {
+			if (!$create_default_values) {
 			  	
 			
-					$inhert_shifts = Shifts::
+					$inhert_shifts = Shift::
 						where("year",$fromyear)
 						->where("week",$fromweeknum)
 						->get();
@@ -102,7 +102,7 @@ class ShiftsController extends Controller
 					$shift = new Shift;
 			  	  	$shift->year = $year;
 			  	  	$shift->week = $weeknum;
-			  	  	$shift->day = $inhert_shift->inhert_shift->day;
+			  	  	$shift->day = $inhert_shift->day;
 			  	  	$shift->period = $inhert_shift->period;
 			  	  	$shift->pos = $inhert_shift->pos;
 					$shift->employee = $inhert_shift->employee;
@@ -138,7 +138,15 @@ class ShiftsController extends Controller
 					 }
 					}
 			}
+
+
+
 		}
+
+
+
+
+
 
 		return redirect('/shifts/'.$year.'/'.$weeknum);
 	}
