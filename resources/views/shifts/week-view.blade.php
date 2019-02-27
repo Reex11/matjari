@@ -80,14 +80,19 @@
 
 				@foreach ($shifts->where('day',$daynum) as $shift)
 					@if ($shift->employee == null && $daynum != (date("w")+1) )
-					<td class="table-pos-{{$shift->pos}}" style="background-color:#f0f0f0">
+					<td class="table-pos-{{$shift->pos}} text-center" style="background-color:#f0f0f0">
 					@else
-					<td class="table-pos-{{$shift->pos}}">
+					<td class="table-pos-{{$shift->pos}} text-center">
 					@endif
 						@if ($shift->employee == NULL)
 						لا يوجد
 						@else
+						<div class="col-sm-12"> 
 						{{ $employees->where('id',$shift->employee)->first()->name }}
+						</div>
+						<div class="col-sm-12">
+						{{ $shift->value }}
+						</div>
 						@endif
 					</td>
 
