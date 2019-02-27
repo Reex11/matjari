@@ -27,7 +27,11 @@
 			<td>{{ $employee->id }}</td>
 			<td width="40%">{{ $employee->name }}</td>
 			<td>{{ $employee->phone }} @empty($employee->phone) - @endempty</td>
-			<td>{{ $employee->isCashier }}</td>
+			<td>
+				@if ($employee->isCashier) <span class="badge badge-pill badge-primary">كاشير</span> 
+				@else <span class="badge badge-pill badge-secondary">ليس كاشير</span>
+				@endif
+			</td>
 			<td><a class="btn btn-sm btn-outline-dark" href="/employee/view/{{$employee->id}}">عرض</a> <a class="btn btn-sm btn-outline-dark" href="/employee/edit/{{$employee->id}}">تعديل المعلومات</a></td>
 		</tr>
 	@endforeach

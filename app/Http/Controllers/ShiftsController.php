@@ -118,6 +118,13 @@ class ShiftsController extends Controller
 	}
 
 
+	public function update_week()
+	{
+		
+		return request()->all();
+	}
+
+
 	// HELPERS
 
 	public function current_week()

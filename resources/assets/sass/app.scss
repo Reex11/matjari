@@ -2,7 +2,7 @@
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
 @import url('https://fonts.googleapis.com/css?family=Nunito');
-@import url('https://fonts.googleapis.com/css?family=Tajawal:100,300,600');
+@import url('https://fonts.googleapis.com/css?family=Tajawal:300,500,600');
 
 // Variables
 @import "variables";
@@ -65,9 +65,9 @@ html, body {
 }
 
 .week-table th, .week-table td {
-    padding: 1.25rem;
-
+    // padding: 1rem;
 }
+
 table.week-table {
     border: solid 3px #454d55;
     border-left: 0;
@@ -82,85 +82,166 @@ td.table-pos-2 , td.thick-border-left , th.thick-border-left {
     border-left: solid 3px #454d55;
 }
 
-// Bootstraps 4 Toggle
 
-.form-check-switch {
-  display: inline-block;
-  width: 44px;
-  height: 24px;
+// Switches for Bootstrap 4.
+
+//
+// IMPORTANT: These Sass variables are defined in Bootstrap's variables.scss. You should import that file first, then remove these.
+//
+
+
+//
+// These variables can be used to customize the switch component.
+//
+$switch-height: calc(#{$input-height} * .8) !default;
+$switch-height-sm: calc(#{$input-height-sm} * .8) !default;
+$switch-height-lg: calc(#{$input-height-lg} * .8) !default;
+$switch-border-radius: $switch-height !default;
+$switch-bg: $input-disabled-bg !default;
+$switch-checked-bg: map-get($theme-colors, 'primary') !default;
+$switch-disabled-bg: $custom-control-indicator-disabled-bg !default;
+$switch-disabled-color: $custom-control-label-disabled-color !default;
+$switch-thumb-bg: $white !default;
+$switch-thumb-border-radius: 50% !default;
+$switch-thumb-padding: 2px !default;
+$switch-focus-box-shadow: 0 0 0 $input-btn-focus-width rgba(map-get($theme-colors, 'primary'), .25);
+$switch-transition: .2s all !default;
+
+.switch {
+  font-size: $font-size-base;
   position: relative;
-  .form-check-input {
-    display: none;
-    &:checked + .form-check-label:after {
-      left: 50%;
-    }
-  }
-  .form-check-label {
-    border-radius: 12px;
-    position: absolute;
-    white-space:nowrap;
-    font-size: 0;
-    top:0;
-    bottom:0;
-    left:0;
-    right:0;
-    margin:0;
-    padding:0;
-    background: #ccc;
-    transition: all .3s ease;
-    &:after {
-      background: #fff;
-      border-radius: 50%;
-      content: "";
-      top: 2px;
-      left: 2px;
-      width: 20px;
-      height: 20px;
-      position: absolute;
-      transition: all .3s ease;
-    }
-  }
-}
 
-.form-check-primary {
-  .form-check-input {
-    &:checked + .form-check-label{
-      background: #007bff;
+  input {
+    position: absolute;
+    height: 1px;
+    width: 1px;
+    background: none;
+    border: 0;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    overflow: hidden;
+    padding: 0;
+
+    + label {
+      position: relative;
+      min-width: calc(#{$switch-height} * 2);
+      border-radius: $switch-border-radius;
+      height: $switch-height;
+      line-height: $switch-height;
+      display: inline-block;
+      cursor: pointer;
+      outline: none;
+      user-select: none;
+      vertical-align: middle;
+      text-indent: calc(calc(#{$switch-height} * 2) + .5rem);
+    }
+
+    + label::before,
+    + label::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: calc(#{$switch-height} * 2);
+      bottom: 0;
+      display: block;
+    }
+
+    + label::before {
+      left: 0;
+      background-color: $switch-bg;
+      border-radius: $switch-border-radius;
+      transition: $switch-transition;
+    }
+
+    + label::after {
+      top: $switch-thumb-padding;
+      right: $switch-thumb-padding;
+      width: calc(#{$switch-height} - calc(#{$switch-thumb-padding} * 2));
+      height: calc(#{$switch-height} - calc(#{$switch-thumb-padding} * 2));
+      border-radius: $switch-thumb-border-radius;
+      background-color: $switch-thumb-bg;
+      transition: $switch-transition;
+    }
+
+    &:checked + label::before {
+      background-color: $switch-checked-bg;
+    }
+
+    &:checked + label::after {
+      margin-right: $switch-height;
+    }
+
+    &:focus + label::before {
+      outline: none;
+      box-shadow: $switch-focus-box-shadow;
+    }
+
+    &:disabled + label {
+      color: $switch-disabled-color;
+      cursor: not-allowed;
+    }
+
+    &:disabled + label::before {
+      background-color: $switch-disabled-bg;
     }
   }
-}
-.form-check-secondary {
-  .form-check-input {
-    &:checked + .form-check-label{
-      background: #6c757d;
+
+  // Small variation
+  &.switch-sm {
+    font-size: $font-size-sm;
+
+    input {
+      + label {
+        min-width: calc(#{$switch-height-sm} * 2);
+        height: $switch-height-sm;
+        line-height: $switch-height-sm;
+        text-indent: calc(calc(#{$switch-height-sm} * 2) + .5rem);
+      }
+
+      + label::before {
+        width: calc(#{$switch-height-sm} * 2);
+      }
+
+      + label::after {
+        width: calc(#{$switch-height-sm} - calc(#{$switch-thumb-padding} * 2));
+        height: calc(#{$switch-height-sm} - calc(#{$switch-thumb-padding} * 2));
+      }
+
+      &:checked + label::after {
+        margin-right: $switch-height-sm;
+      }
     }
   }
-}
-.form-check-success {
-  .form-check-input {
-    &:checked + .form-check-label{
-      background: #28a745;
+
+  // Large variation
+  &.switch-lg {
+    font-size: $font-size-lg;
+
+    input {
+      + label {
+        min-width: calc(#{$switch-height-lg} * 2);
+        height: $switch-height-lg;
+        line-height: $switch-height-lg;
+        text-indent: calc(calc(#{$switch-height-lg} * 2) + .5rem);
+      }
+
+      + label::before {
+        width: calc(#{$switch-height-lg} * 2);
+      }
+
+      + label::after {
+        width: calc(#{$switch-height-lg} - calc(#{$switch-thumb-padding} * 2));
+        height: calc(#{$switch-height-lg} - calc(#{$switch-thumb-padding} * 2));
+      }
+
+      &:checked + label::after {
+        margin-right: $switch-height-lg;
+      }
     }
   }
-}
-.form-check-info {
-  .form-check-input {
-    &:checked + .form-check-label{
-      background: #17a2b8;
-    }
-  }
-}
-.form-check-warning {
-  .form-check-input {
-    &:checked + .form-check-label{
-      background: #ffc107;
-    }
-  }
-}
-.form-check-danger {
-  .form-check-input {
-    &:checked + .form-check-label{
-      background: #dc3545;
-    }
+
+  + .switch {
+    margin-right: 1rem;
   }
 }

@@ -5,7 +5,9 @@
 @section('page-title',' تعديل جدول الأسبوع  '.$weeknum.' - '.$year)
 
 @section('page-nav')
-	<a class="btn font-weight-bold btn-success inline-btn " href="/shifts/{{$year}}/{{$weeknum}}" >تطبيق التعديلات</a>
+	<form class="form-inline table-responsive-lg" method="POST" action="/shifts/{{$year}}/{{ $weeknum }}/edit/">
+	{{ csrf_field() }}
+	<input type="submit" class="btn font-weight-bold btn-outline-success inline-btn ml-2" value="تطبيق التعديلات" >
 	<a class="btn font-weight-bold btn-outline-danger inline-btn " href="/shifts/{{$year}}/{{$weeknum}}" >إلغاء </a>
 @endsection
 
@@ -27,75 +29,86 @@
 
 
 @section('content')
+<div class="container-fluid">
+	@if(count($shifts) < 7)
+		<div class="alert alert-warning" role="alert">
+		  لا توجد قيم لهذا الأسبوع
+		</div>
+	@else
+		<table class="table table-bordered week-table" style="min-width:700px;margin-left:auto; margin-right:auto; font-size:20px;">
+			<thead class="thead-dark">
+				<tr style="text-align: right;">
+					<th></th>
+					<th class="text-center thick-border-left" >الصباح</th>
+					<th class="text-center thick-border-left" >المساء</th>
+					<th class="text-center thick-border-left" >الليل</th>
+				</tr>
+			</thead>
 
-@if(count($shifts) < 7)
-	<div class="alert alert-warning" role="alert">
-	  لا توجد قيم لهذا الأسبوع
-	</div>
-@else
-<form class="form-inline">
-	<table class="table table-bordered week-table" style="min-width: 80%; margin-left:auto; margin-right:auto; font-size:20px;">
-		<thead class="thead-dark">
-			<tr style="text-align: right;">
-				<th></th>
-				<th class="text-center thick-border-left" >الصباح</th>
-				<th class="text-center thick-border-left" >المساء</th>
-				<th class="text-center thick-border-left" >الليل</th>
-			</tr>
-		</thead>
+		@foreach ($days as $daynum => $day)
+			<tr>
+				<td class="week-day thick-border-left text-center">{{ $day }}</td>
 
-	@foreach ($days as $daynum => $day)
-		<tr class="@if($daynum == (date("w")+1))table-success @endif">
-			<td class="week-day thick-border-left text-center">{{ $day }}</td>
-
-			@foreach ($shifts->where('day',$daynum) as $shift)
-				
-				@if ($shift->pos == 1) <td class=""><div class="row"> 	@endif
-				
-					@if ($shift->employee == null && $daynum != (date("w")+1) )
-					<div class="col-sm table-pos-{{$shift->pos}}" style="background-color:#f0f0f0">
-					@else
-					<div class="col-sm table-pos-{{$shift->pos}}">
-					@endif
-
+				@foreach ($shifts->where('day',$daynum) as $shift)
+					
+					@if ($shift->pos == 1) <td class=""><div class="row">@endif
 						
-						<div class="from-group">
-								<span class="badge badge-info text-center mb-1">{{$shift->pos}}</span>
-								
+						{{-- STARTING SHIFT DIV --}}
 
-								<select class="custom-select custom-select-sm col-sm-12">
+						<div class="col-lg table-pos-{{$shift->pos}}">
+							
+								<div class="form-row">
+									<div class="from-group col-sm-2 mt-3">
+							{{-- Point of sale no. --}}
+										<h4><span class="badge badge-info text-center mt-1">{{$shift->pos}}</span></h4>
+									</div>
+							{{-- Shift Value --}}
+									<div class="from-group col-sm-10">
+										<label for="shift-value-{{$shift->id}}" class="sr-only">قيمة الدورية</label>
+										<input class="form-control form-control mb-1 shift-value" style="width:100%;" name="shift-value-{{$shift->id}}" type="number" step="0.25" placeholder="قيمة الوردية" value="{{$shift->value}}">
+								
+							{{-- Cashiers List --}}
+										<label for="employee-{{$shift->id}}" class="sr-only">الكاشير</label>
+										<select class="custom-select custom-select-sm mb-2" name="employee-{{$shift->id}}" style="width:100%">
+										{{-- Cashier Dropdown with check if NULL --}}
 										<option value="none" 
 										@if ($shift->employee == NULL)
-										 selected
-										@else
+										selected
+										@endif
 										>لا يوجد</option>
-									@foreach ($employees as $employee)
-								  		<option value="{{$employee->id}}" 
-									  		
-									  		@if($shift->employee == $employee->id)
-									  		selected
-									  		@endif
+											{{-- Listing Cashiers --}}
+											@foreach ($employees as $employee)
+										  		<option value="{{$employee->id}}" 
+											  		
+											  		@if($shift->employee == $employee->id)
+											  		selected
+											  		@endif
 
-									  		>{{$employee->name}}
-								  		</option>
-								  	@endforeach
-								</select>
+											  		>{{$employee->name}}
+										  		</option>
+										  	@endforeach
+										</select>
+									</div>
+								</div>
+									
+						</div> {{-- ENDING SHIFT DIV --}}
 
-									<input class="form-control form-control-sm col-sm-12" style="max-width: 60px;" id="shift-value-{{$shift->id}}" type="text" placeholder="قيمة الوردية" value="{{$shift->value}}">		
+					@if ($shift->pos == count($poss)) </div></td> @endif
 
-								@endif
-						</div>
-					</div>
-				@if ($shift->pos == count($poss)) </div></td> @endif
+				@endforeach
 
-			@endforeach
+			</tr>
+		@endforeach
 
-		</tr>
-	@endforeach
+	@endif
 
-@endif
+		</table>
+	</form>
+</div>
+@endsection
 
-	</table>
-</form>
-
+@section('custom-js')
+	$(".shift-value").change(function () {
+		this.value = parseFloat(this.value).toFixed(2)
+	});
 @endsection

@@ -4,6 +4,8 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
 
         <title>نظام بقالتي  @yield("title")</title>
 
@@ -12,11 +14,13 @@
         <!-- fontawesome icons -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
-
-
         <!-- Styles -->
-        
         <link rel="stylesheet" href="/css/app.css">
+
+        <!-- Js -->
+        <script src="/js/app.js"></script>
+
+
 
         <style>
             .full-height {
@@ -38,15 +42,15 @@
             }
         </style>
     </head>
-    <body>
-        <div class="navbar nav-links">
+    <body id="#app">
+        <div class="navbar nav-links d-print-none">
             <span style="font-size: 30px"> نظام بقالتي </span>
             <a href="/#">الرئيسية</a>
             <a href="/shifts">الورديات</a>
             <a href="/employees">الموظفين</a>
         </div>
         <div class="content">
-            <div class="row mb-5 mr-2">
+            <div class="row mb-5 mr-2 d-print-none">
 
                     <h1>@yield('page-title')</h1>
                     <div class="mr-5 my-auto">
@@ -56,5 +60,10 @@
             </div>
             @yield('content')
         </div>
+        <script type="text/javascript">
+            @yield('custom-js')
+        </script>
+
+
     </body>
 </html>

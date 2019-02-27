@@ -21,5 +21,26 @@ class EmployeesController extends Controller
 		return view("employees.create");
 	}
 
+	public function store() {
+
+		//return request()->all();
+
+
+		$employee = new Employee();
+
+		$employee->name = request('employeename');
+
+		if (request('cSalary') == null) $employee->constantSalary = 0;
+		else 							$employee->constantSalary = request('cSalary');
+		$employee->phone = request('phone');
+		
+		if(request('isCashier') == "on") $employee->isCashier = true;
+		else						 	 $employee->isCashier = false;
+		
+		$employee->save();
+
+		return redirect('/employees');
+	}
+
 
 }

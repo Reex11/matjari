@@ -39,8 +39,7 @@ return [
     |
     */
 
-    #'debug' => env('APP_DEBUG', false),
-    'debug' => isset($_GET['debug']) ? true : false,
+    'debug' => env('APP_DEBUG', false),
 
 
     /*

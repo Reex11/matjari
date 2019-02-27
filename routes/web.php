@@ -13,12 +13,13 @@
 
 Route::get('/', 'PagesController@index');
 
-Route::get('/test', 'PagesController@test');
 
+Route::post('/employees','EmployeesController@store');
 Route::get('/employees/create','EmployeesController@create');
 Route::get('/employees/{json?}','EmployeesController@index');
 
 
+Route::post('/shifts/{year}/{weeknum}/edit', 'ShiftsController@update_week');
 Route::get('/shifts/{year}/{weeknum}/edit', 'ShiftsController@edit_week');
 Route::get('/shifts/{year?}/{weeknum?}/{json?}', 'ShiftsController@view_week');
 
