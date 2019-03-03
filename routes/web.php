@@ -25,6 +25,8 @@ Route::get('/', 'PagesController@index');
 // Route::get('/employees/{employee}','EmployeesController@view');
 
 Route::resource('employees', 'EmployeesController');
+Route::resource('rewards', 'RewardsController');
+
 
 Route::get('/shifts/create/{year?}/{weeknum?}/{fromyear?}/{fromweeknum?}', 'ShiftsController@create');
 Route::get('/shifts/{year}/{weeknum}/edit', 'ShiftsController@edit');

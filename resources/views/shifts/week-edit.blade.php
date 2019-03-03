@@ -6,12 +6,12 @@
 
 @section('page-nav')
 	<form class="form-inline table-responsive-lg" method="POST" action="/shifts/{{$year}}/{{ $weeknum }}">
-	{{ csrf_field() }}
-	{{ method_field('PATCH') }}
+	@csrf
+	@method('PATCH')
 	<input type="hidden" name="year" value="{{$year}}">
 	<input type="hidden" name="weeknum" value="{{$weeknum}}">
-	<input type="submit" class="btn font-weight-bold btn-outline-success inline-btn ml-2" value="تطبيق التعديلات" >
-	<a class="btn font-weight-bold btn-outline-danger inline-btn " href="/shifts/{{$year}}/{{$weeknum}}" >إلغاء </a>
+	<input type="submit" class="btn font-weight-bold btn-outline-success inline-btn ml-2  btn-sm" value="تطبيق التعديلات" >
+	<a class="btn font-weight-bold btn-outline-danger inline-btn btn-sm" href="/shifts/{{$year}}/{{$weeknum}}" >إلغاء </a>
 @endsection
 
 

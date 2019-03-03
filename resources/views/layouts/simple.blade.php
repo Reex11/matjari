@@ -50,11 +50,14 @@
             <a href="/employees">الموظفين</a>
         </div>
         <div class="content">
-            <div class="row mb-5 mr-2 d-print-none">
+            <div class="row mb-5 mx-3 d-print-none">
 
-                    <h1>@yield('page-title')</h1>
-                    <div class="mr-5 my-auto">
+                    <h1 class="h2">@yield('page-title')</h1>
+                    <div class="mr-5 my-auto ml-auto">
                         @yield('page-nav')
+                    </div>
+                    <div class="my-auto">
+                        @yield('left-page-nav')
                     </div>
 
             </div>

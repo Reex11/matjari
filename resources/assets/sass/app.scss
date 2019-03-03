@@ -9,6 +9,7 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+@import '~bootstrap-vue/src/index.scss';
 //@import '~bootstrap-4.2.1-rtl/scss/bootstrap';
 
 
@@ -80,6 +81,18 @@ table.week-table {
 
 td.table-pos-2 , td.thick-border-left , th.thick-border-left {
     border-left: solid 3px #454d55;
+}
+
+
+// ---- ARABIC FIXES
+
+.form-check-inline {
+    margin-right: 0.75rem;
+}
+
+.form-check-inline .form-check-input {
+    margin-left: 0.3125rem;
+    margin-right: 0;
 }
 
 
