@@ -2,6 +2,8 @@
 namespace Deployer;
 
 require 'recipe/laravel.php';
+require 'recipe/npm.php';
+require 'recipe/fpm.php';
 
 // Project name
 set('application', 'alamermarket');

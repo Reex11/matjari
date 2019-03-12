@@ -2,7 +2,7 @@
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
 @import url('https://fonts.googleapis.com/css?family=Nunito');
-@import url('https://fonts.googleapis.com/css?family=Tajawal:300,400,700&subset=arabic');
+@import url('https://fonts.googleapis.com/css?family=Tajawal:300,400,700,900&subset=arabic');
 
 // Variables
 @import "variables";
@@ -23,15 +23,43 @@ html, body {
     background-color: #fff;
     color: #636b6f;
     font-family: 'Tajawal', sans-serif;
-    font-weight: 100;
+    font-weight: 500;
     text-align:right;
     margin: 0;
 }
 
-.navbar {
-    padding: 1.5vw;
+.matjari-nav {
+    /* padding: 1.5vw; */
     border-bottom: 2px solid #77dd99;
-    display:block;
+
+    /* display:block; */
+}
+
+.navbar-nav {
+    padding-right: 0;
+}
+
+.nav-links > a {
+    color: #77dd99;
+    padding: 0 25px;
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.matjari-nav .nav-link {
+    font-weight: 600;
+}
+
+.navbar-expand-lg .navbar-nav .nav-link {
+    padding-right: 1.5rem;
+    padding-left: 0.5rem;
+}
+
+
+.navbar-light .navbar-nav .nav-link {
+    color: #77dd99;
 }
 
 .flex-center {
@@ -56,13 +84,16 @@ html, body {
     text-transform: uppercase;
 }
 
-.nav-links > a {
-    color: #77dd99;
-    padding: 0 25px;
-    font-size: 18px;
-    font-weight: 600;
-    text-decoration: none;
-    text-transform: uppercase;
+.dev {
+  color: $purple;
+}
+
+a.dropdown-item:hover {
+    background-color: $gray-200;
+}
+
+a.dropdown-item:active {
+    background-color: $blue;
 }
 
 .week-table th, .week-table td {
@@ -70,8 +101,7 @@ html, body {
 }
 
 table.week-table {
-    border: solid 3px #454d55;
-    border-left: 0;
+    border: solid 3px #454d55 !important;
 }
 
 .week-day {
@@ -79,12 +109,40 @@ table.week-table {
     font-weight: bold;
 }
 
-td.table-pos-2 , td.thick-border-left , th.thick-border-left {
+td.table-pos-1 {
+    border-right: solid 3px #454d55;
+}
+
+td.thick-border-left , th.thick-border-left {
     border-left: solid 3px #454d55;
 }
 
 
-// ---- ARABIC FIXES
+.thick-border {
+    border: solid 3px #454d55;
+}
+
+.bootstrap-datetimepicker-widget {
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.bootstrap-datetimepicker-widget .list-unstyled {
+  padding:0;  
+}
+
+
+
+// ---- RTL FIXES
+
+.navbar-brand {
+    margin-right: 1rem;
+    margin-left: auto;
+}
+
+.dropdown-menu {
+  text-align:right;
+}
 
 .form-check-inline {
     margin-right: 0.75rem;
@@ -93,6 +151,47 @@ td.table-pos-2 , td.thick-border-left , th.thick-border-left {
 .form-check-inline .form-check-input {
     margin-left: 0.3125rem;
     margin-right: 0;
+}
+
+.alert-dismissible .close {
+  left: 0;
+  right: auto;
+}
+
+.alert-dismissible {
+    padding-left: 4rem;
+    padding-right: inherit;
+}
+
+
+// Horizontal
+//
+// Change the layout of list group items from vertical (default) to horizontal.
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+    .list-group-horizontal#{$infix} {
+      flex-direction: row;
+
+      .list-group-item {
+        margin-left: -$list-group-border-width;
+        margin-bottom: 0;
+
+        &:first-child {
+          @include border-right-radius($list-group-border-radius);
+          @include border-top-left-radius(0);
+        }
+
+        &:last-child {
+          margin-left: 0;
+          @include border-left-radius($list-group-border-radius);
+          @include border-bottom-right-radius(0);
+        }
+      }
+    }
+  }
 }
 
 

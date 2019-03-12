@@ -7,32 +7,28 @@ use App\Employee;
 class EmployeesController extends Controller
 {
     
-    public function index($json=false) {
+    public function index()
+    {
 
     	$employees = Employee::all();
-
-    	if ($json==="json") return $employees;
-		else return view("employees.index",compact('employees'));
-		
+		return view("employees.index",compact('employees'));
 	}
 
-	public function create() {
+	public function create()
+	{
 
 		return view("employees.create");
 	}
 
-	public function store() {
-
-		//return request()->all();
-
+	public function store()
+	{
 
 		$employee = new Employee();
-
 		$employee->name = request('employeename');
+		$employee->phone = request('phone');
 
 		if (request('cSalary') == null) $employee->constantSalary = 0;
 		else 							$employee->constantSalary = request('cSalary');
-		$employee->phone = request('phone');
 		
 		if(request('isCashier') == "on") $employee->isCashier = true;
 		else						 	 $employee->isCashier = false;
@@ -42,34 +38,68 @@ class EmployeesController extends Controller
 		return redirect('/employees');
 	}
 
-	public function edit($id)
+	public function edit(Employee $employee)
 	{
-		$employee = Employee::findorfail($id);
 		return view("employees.edit",compact('employee'));
 	}
 
-	public function update($id)
+	public function update(Employee $employee)
 	{
-		$employee = Employee::findorfail($id);
 		$employee->name = request('employeename');
+		$employee->phone = request('phone');
 		if (request('cSalary') == null) $employee->constantSalary = 0;
 		else 							$employee->constantSalary = request('cSalary');
-		$employee->phone = request('phone');
 		if(request('isCashier') == "on") $employee->isCashier = true;
 		else						 	 $employee->isCashier = false;
 		$employee->save();
 		return redirect('/employees');
 	}
 
-	public function destroy()
+	// DO BE MOVED TO SALARIES CONTROLLER
+	public function get_month_shifts_value($employee_id, $untill = "all", $month = NULL, $year = NULL )
 	{
+		
+		if ($untill === "today") $untill = date("d");
+		if ($year === NULL) $year = date("Y");
+		if ($month === NULL) $month = date("m");
 
+		$month = sprintf("%02d", $month);
+		$start_date = $year."-".$month."-01";
+		if ($untill === "all") {
+			$untill_date = date("Y-m-t",strtotime($start_date));
+		} else {
+			$untill = sprintf("%02d", $untill);
+			$untill_date = $year."-".$month."/".$untill;
+		}
+
+			$total = 00.00;
+
+		$shifts = \App\Shift::all()
+									->where('employee',$employee_id)
+									->where('year',$year)
+									->where('date','>=',$start_date)
+									->where('date','<=',$untill_date);
+		
+		
+
+		foreach ($shifts as $shift) {
+			$total = $total + $shift->value;
+		}
+
+		return number_format($total, 2);
 	}
 
-	public function show($id)
+	// TO BE INTIATED
+	// ( DONT ALLOW DELETE FOR EXISTING SALARIES )
+	public function destroy()
 	{
-		$employee = Employee::findorfail($id);
+	}
 
+	public function show(Employee $employee)
+	{
+		// TODO: CHANGE TO SALARIES CONTROLLER FUNCTION
+		// TODO: ADD LAST 5 MONTHS SALARIES PREVIEW
+		// TODO: ADD LAST 5 REWARDS
 		return view('employees.show',compact('employee'));
 	}
 

@@ -16,11 +16,16 @@ class CreateRewardsTable extends Migration
         Schema::create('rewards', function (Blueprint $table) {
             $table->increments('id');
             $table->boolean('isDeduct')->default(false);
-            $table->foreign('employee')->references('id')->on('employees');
+            $table->unsignedInteger('employee');
             $table->string('title');
             $table->text('description')->nullable()->default(NULL);
             $table->integer('amount');
+            $table->date('date');
             $table->timestamps();
+            
+            $table->foreign('employee')->references('id')->on('employees');
+            $table->index('employee'); 
+
         });
     }
 

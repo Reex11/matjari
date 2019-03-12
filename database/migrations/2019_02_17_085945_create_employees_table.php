@@ -15,7 +15,6 @@ class CreateEmployeesTable extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
             $table->string('name')->unique();
             $table->boolean('isCashier')->default(true);
             $table->decimal('constantSalary')->default(0);
@@ -23,7 +22,10 @@ class CreateEmployeesTable extends Migration
             $table->string('deviceId')->nullable();
             $table->decimal('totalShifts')->default(0);
             $table->decimal('totalEarnings')->default(0);
-            // $table->timestamps();
+            $table->timestamps();
+
+
+
         });
     }
 

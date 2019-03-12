@@ -1,0 +1,22 @@
+{
+  "short_name": "متجري",
+  "name": "نظام متجري",
+  "description": "صديقك لإدارة متجرك",
+  "icons": [
+    {
+      "src": "/favicons/192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/favicons/512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/pwa",
+  "background_color": "#77dd99",
+  "display": "standalone",
+  "scope": "/pwa",
+  "theme_color": "#77dd99"
+}

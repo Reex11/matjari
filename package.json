@@ -11,7 +11,6 @@
     },
     "devDependencies": {
         "axios": "^0.18",
-        "bootstrap": "^4.3.1",
         "cross-env": "^5.1",
         "jquery": "^3.2",
         "laravel-mix": "^4.0.7",
@@ -24,6 +23,10 @@
         "vue-template-compiler": "^2.6.6"
     },
     "dependencies": {
-        "bootstrap-vue": "^2.0.0-rc.13"
+        "bootstrap": "^4.3.1",
+        "bootstrap-vue": "^2.0.0-rc.13",
+        "eonasdan-bootstrap-datetimepicker": "^4.17.47",
+        "moment": "^2.10",
+        "pc-bootstrap4-datetimepicker": "github:pingcheng/bootstrap4-datetimepicker"
     }
 }

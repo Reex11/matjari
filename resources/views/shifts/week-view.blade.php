@@ -2,33 +2,33 @@
 
 @section('title','| جدول الأسبوع')
 
-@section('page-title','جدول الأسبوع  '.$weeknum.' - '.$year)
+@section('page-title','جدول الأسبوع  '.$weeknum.'-'.$year)
 
 @section('page-nav')
-	<a class="btn btn-outline-info inline-btn btn-sm" href="/shifts/{{$year}}/{{$weeknum}}/edit" ><i class="fas fa-pencil-alt ml-2"></i>تعديل الأسبوع</a>
-	<a class="btn btn-outline-info inline-btn btn-sm" href="/shifts/create" disabled><i class="fas fa-plus ml-2"></i>إضافة أسبوع</a>
+	<a class="btn btn-outline-info inline-btn btn-sm" href="/shifts/{{$table}}/{{$year}}/{{$weeknum}}/edit" ><i class="fas fa-pencil-alt ml-2"></i>تعديل الأسبوع</a>
+	<a class="btn btn-outline-info inline-btn btn-sm" href="/shifts/create/{{$table}}"><i class="fas fa-plus ml-2"></i>إضافة أسبوع</a>
 @endsection
 
 @section('left-page-nav')
-	<a class="btn btn-outline-info inline-btn btn-sm" href="/shifts/{{$year}}/{{$weeknum-1}}"> <i class="fas fa-chevron-right"></i>  السابق</a>
-	<a class="btn btn-outline-info inline-btn btn-sm" href="/shifts/{{$year}}/{{$weeknum+1}}">التالي <i class="fas fa-chevron-left"></i> </a>
+	<a class="btn btn-outline-info inline-btn btn-sm" href="/shifts/{{$table}}/{{$year}}/{{$weeknum-1}}"> <i class="fas fa-chevron-right"></i>  السابق</a>
+	<a class="btn btn-outline-info inline-btn btn-sm" href="/shifts/{{$table}}/{{$year}}/{{$weeknum+1}}">التالي <i class="fas fa-chevron-left"></i> </a>
 	
 	<div class="dropdown btn inline-btn">
 		<button class="btn btn-outline-info inline-btn btn-sm dropdown-toggle" type="button" id="weeks-nav" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		  أكثر ..
 		</button>	
 		<div class="dropdown-menu" aria-labelledby="weeks-nav">
-			<a class="dropdown-item" href="/shifts/">الأسبوع الحالي</a>
+			<a class="dropdown-item" href="/shifts/{{$table}}">الأسبوع الحالي</a>
 			<div class="dropdown-divider"></div>
 			<a class="dropdown-item disabled" href="#" tabindex="-1" aria-disabled="true">الأسابيع السابقة</a>
-			<a class="dropdown-item" href="/shifts/{{$year}}/{{$weeknum-3}}">الأسبوع {{$weeknum-3}}</a>
-	    	<a class="dropdown-item" href="/shifts/{{$year}}/{{$weeknum-2}}">الأسبوع {{$weeknum-2}}</a>
-	    	<a class="dropdown-item" href="/shifts/{{$year}}/{{$weeknum-1}}">الأسبوع {{$weeknum-1}}</a>
+			<a class="dropdown-item" href="/shifts/{{$table}}/{{$year}}/{{$weeknum-3}}">الأسبوع {{$weeknum-3}}</a>
+	    	<a class="dropdown-item" href="/shifts/{{$table}}/{{$year}}/{{$weeknum-2}}">الأسبوع {{$weeknum-2}}</a>
+	    	<a class="dropdown-item" href="/shifts/{{$table}}/{{$year}}/{{$weeknum-1}}">الأسبوع {{$weeknum-1}}</a>
 	    	<div class="dropdown-divider"></div>
 	    	<a class="dropdown-item disabled" href="#" tabindex="-1" aria-disabled="true">الأسابيع التالية</a>
-	    	<a class="dropdown-item" href="/shifts/{{$year}}/{{$weeknum+1}}">الأسبوع {{$weeknum+1}}</a>
-	    	<a class="dropdown-item" href="/shifts/{{$year}}/{{$weeknum+2}}">الأسبوع {{$weeknum+2}}</a>
-	    	<a class="dropdown-item" href="/shifts/{{$year}}/{{$weeknum+3}}">الأسبوع {{$weeknum+3}}</a>
+	    	<a class="dropdown-item" href="/shifts/{{$table}}/{{$year}}/{{$weeknum+1}}">الأسبوع {{$weeknum+1}}</a>
+	    	<a class="dropdown-item" href="/shifts/{{$table}}/{{$year}}/{{$weeknum+2}}">الأسبوع {{$weeknum+2}}</a>
+	    	<a class="dropdown-item" href="/shifts/{{$table}}/{{$year}}/{{$weeknum+3}}">الأسبوع {{$weeknum+3}}</a>
 	  	</div>
 
 	</div>
@@ -75,8 +75,6 @@
 	$poss = array ( 1,2 );
 	$periods = array ( 1,2,3 );
 
-
-
 ?>
 
 
@@ -85,19 +83,21 @@
 <div class="container-fluid">
 	@if(count($shifts) < 7)
 		<div class="alert alert-warning" role="alert">
-		  لا توجد قيم لهذا الأسبوع
+		  لا توجد قيم لهذا الأسبوع | <a href="/shifts/create/{{ $table }}/{{ $year }}/{{ $weeknum }}">إنشاء هذا الأسبوع</a>
 		</div>
 	@else
-
-		<table class="table table-bordered week-table d-print-block" style="min-width: 80%; margin-left:auto; margin-right:auto;">
+<div class="table-responsive">
+	<table class="table table-bordered thick-border week-table d-print-block" style="min-width: 80%; margin-left:auto; margin-right:auto;">
 			<thead class="thead-dark">
 				<tr style="text-align: right;">
 					<th></th>
-					<th class="text-center thick-border-left" colspan="2">الصباح</th>
-					<th class="text-center thick-border-left" colspan="2">المساء</th>
-					<th class="text-center thick-border-left" colspan="2">الليل</th>
+					@foreach ($shifts->unique('period') as $period)
+					<th class="text-center thick-border-left" colspan="2">الفترة  {{$period->period}}</th>
+					@endforeach
 				</tr>
 			</thead>
+
+
 
 		@foreach ($days as $daynum => $day)
 			<tr class="@if($daynum == (date("w")+1))table-success @endif">
@@ -130,5 +130,7 @@
 	@endif
 
 	</table>
-</td>
+
+</div>
+
 @endsection

@@ -6,5 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
-    //
+    
+    protected $fillable = [
+        'name',
+        'isCashier',
+        'constantSalary',
+        'phone',
+        'deviceId'
+    ];
+
 }

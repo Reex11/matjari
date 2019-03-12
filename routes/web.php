@@ -26,10 +26,19 @@ Route::get('/', 'PagesController@index');
 
 Route::resource('employees', 'EmployeesController');
 Route::resource('rewards', 'RewardsController');
+Route::resource('salaries', 'SalariesController');
+
+Route::get('/salaries/employee/{id}', 'SalariesController@listByEmployee');
+Route::get('/salaries/{year}/{month}', 'SalariesController@listByMonth');
+Route::get('/test/create/{year}/{month}/{employee}', 'SalariesController@create');
+Route::post('/salaries/createmonth', 'SalariesController@createMonth');
+Route::get('/salaries/createmonth/{year}/{month}', 'SalariesController@createMonth');
 
 
-Route::get('/shifts/create/{year?}/{weeknum?}/{fromyear?}/{fromweeknum?}', 'ShiftsController@create');
-Route::get('/shifts/{year}/{weeknum}/edit', 'ShiftsController@edit');
-Route::patch('/shifts/{year}/{weeknum}', 'ShiftsController@update');
-Route::get('/shifts/{year?}/{weeknum?}', 'ShiftsController@show');
+
+Route::get('/shifts/create/{table?}/{year?}/{weeknum?}/{fromyear?}/{fromweeknum?}', 'ShiftsController@create');
+Route::get('/shifts/{table}/{year}/{weeknum}/edit', 'ShiftsController@edit');
+Route::patch('/shifts/{table}/{year}/{weeknum}', 'ShiftsController@update');
+Route::get('/shifts/{table?}/{year?}/{weeknum?}', 'ShiftsController@show');
+
 //Route::get('/test/create_week', 'ShiftsController@create_week');

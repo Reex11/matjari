@@ -5,13 +5,17 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-
+// Register $ global var for jQuery
 import $ from 'jquery';
 window.$ = window.jQuery = $;
 
-
-
 require('./bootstrap');
+
+
+window.moment = require('moment');
+require('pc-bootstrap4-datetimepicker');
+
+
 
 window.Vue = require('vue');
 
@@ -27,4 +31,5 @@ const app = new Vue({
     el: '#app'
 });
 
-// Register $ global var for jQuery
+// starting js commands
+require('./app-defaults');

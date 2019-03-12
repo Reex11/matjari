@@ -11,8 +11,9 @@
 
 @section('content')
 
+<div class="table-responsive">
+<table class="table" style="min-width: 600px; max-width: 700px; margin-left:auto; margin-right:auto;">
 
-<table class="table" style="min-width: 80%; margin-left:auto; margin-right:auto;">
 	<thead>
 		<tr style="text-align: right;">
 			<th>#</th>
@@ -22,10 +23,11 @@
 			<th>إجراءات</th>
 		</tr>
 	</thead>
+	
 	@foreach ($employees as $employee)
 		<tr>
 			<td>{{ $employee->id }}</td>
-			<td width="40%">{{ $employee->name }}</td>
+			<td width="30%">{{ $employee->name }}</td>
 			<td>{{ $employee->phone }} @empty($employee->phone) - @endempty</td>
 			<td>
 				@if ($employee->isCashier) <span class="badge badge-pill badge-primary">كاشير</span> 
@@ -40,10 +42,8 @@
 		</tr>
 	@endforeach
 
-
-
-
 </table>
+</div>
 
 
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">

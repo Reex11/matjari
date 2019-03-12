@@ -11,11 +11,11 @@
 		{{ csrf_field() }}
 		<div class="form-group ">
 			<label for="employeename">اسم الموظف</label>
-			<input class="form-control" type="text" name="employeename" id="employeename" placeholder="اسم الموظف">
+			<input class="form-control" type="text" name="employeename" id="employeename" placeholder="اسم الموظف" required>
 		</div>
 		<div class="form-group ">
 			<label for="phone">رقم الجوال</label>
-			<input class="form-control" type="text" name="phone"  id="phone" placeholder="رقم الجوال">
+			<input class="form-control" type="text" name="phone"  id="phone" placeholder="رقم الجوال" >
 			<small id="emailHelp" class="form-text text-muted">يستخدم لغرض التنبيه لوقت الدوام في حال تفعيل ذلك، وللرجوع للرقم في حال الحاجة إليه من قبل الإدارة</small>
 		</div>
 		<div class="form-group ">	

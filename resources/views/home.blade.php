@@ -4,11 +4,22 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>نظام بقالتي</title>
+        <title>نظام متجري</title>
 
         <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Tajawal:100,600" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Tajawal:200,400,700" rel="stylesheet" type="text/css">
+        <!-- fontawesome icons -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="/css/app.css">
+
+        <!-- Js -->
+        <script src="/js/app.js"></script>
+        <link rel="manifest" href="/js/manifest.json">
+
 
         <!-- Styles -->
         <style>
@@ -78,16 +89,32 @@
             @endif
 
             <div class="content">
-                <div class="title m-b-md">
-                    نظام بقالتي
-                </div>
 
-                <div class="links">
-                    <a href="/shifts">الورديات</a>
-                    <a href="/employees">الموظفين</a>
+                <div class="title">
+                    متجري
+                </div>
+                <p class="lead text-center">
+                    نظام الخدمات المساعدة لإدارة المتجر
+                </p>
+                <div class="{{-- links --}}">
+
+                    <a class="btn btn-success btn-lg mb-2" href="/shifts">الورديات</a>
+                    <a class="btn btn-success btn-lg mb-2" href="/employees">الموظفين</a>
+                    <span>
+                        <a class="btn btn-success btn-lg mb-2" href="/salaries">الرواتب والمكافآت</a>
+                    </span>
+                    <span>
+                        <a class="btn btn-success btn-lg mb-2 disabled" href="#">المنبهات (قريبا)</a>
+                    </span>
 
                 </div>
             </div>
         </div>
+
+        <script type="text/javascript">
+            $(function () {
+              $('[data-toggle="tooltip"]').tooltip()
+            })
+        </script>
     </body>
 </html>

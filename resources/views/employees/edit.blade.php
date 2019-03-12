@@ -12,7 +12,7 @@
 		{{ method_field('PATCH') }}
 		<div class="form-group ">
 			<label for="employeename">اسم الموظف</label>
-			<input class="form-control" type="text" name="employeename" id="employeename" placeholder="اسم الموظف" value="{{ $employee->name }}">
+			<input class="form-control" type="text" name="employeename" id="employeename" placeholder="اسم الموظف" value="{{ $employee->name }}" required>
 		</div>
 		<div class="form-group ">
 			<label for="phone">رقم الجوال</label>
@@ -30,7 +30,7 @@
 			</span>
 		</div>
 
-		<input class="btn btn-outline-success btn-block mt-4" type="submit" value="تحديث">
+		<input class="btn btn-warning btn-block mt-4" type="submit" value="تحديث">
 
 	</form>
 </div>

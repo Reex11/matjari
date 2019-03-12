@@ -1,54 +1,55 @@
 @extends('layouts.simple')
 
-@section('title','تسجيل مكافأة أو خصم')
+@section('title','تعديل مكافأة أو خصم')
 
-@section('page-title','تسجيل مكافأة أو خصم')
+@section('page-title','تعديل مكافأة أو خصم')
 
 @section('content')
 
 <div class="row justify-content-md-center">
-	<form class="form col-xl-6 col-lg-8" method="POST" action="/rewards">
+	<form class="form col-xl-6 col-lg-8" method="POST" action="/rewards/{{ $reward->id }}">
 		@csrf
+		@method('PATCH')
 		<div class="row">
-			<div class="form-group col-md-6" >
+			<div class="form-group col" >
 				<label for="employee">اسم الموظف *</label>
 				
 				<select class="custom-select" name="employee">
 				<option value="none">اختر موظفاً</option>
 					{{-- Listing Cashiers --}}
 					@foreach ($employees as $employee)
-				  		<option value="{{$employee->id}}">{{$employee->name}}</option>
+				  		<option value="{{$employee->id}}" @if($reward->employee == $employee->id) selected @endif>{{$employee->name}}</option>
 				  	@endforeach
 				</select>
 			</div>
 
-			<div class="form-group col-md-6">
-				<label for="employee">نوع العملية *</label>
+			<div class="form-group col">
+				<label>نوع العملية:*</label>
 				<div class="col btn-group btn-group-toggle" dir="ltr">
-					<label class="btn btn-outline-danger col isDeductRadio" for="isDeduction2">
-					  <input autocomplete="off" type="radio" name="isDeduct" id="isDeduction2" value="1">
+					<label class="btn btn-outline-danger col isDeductRadio @if($reward->isDeduct) active @endif" for="isDeduction2">
+					  <input autocomplete="off" type="radio" name="isDeduct" id="isDeduction2" value="1" @if($reward->isDeduct) checked @endif>
 					  
 					    خصم
 					</label>
-					<label class="btn btn-outline-success col isDeductRadio " for="isDeduction1">
-					  <input autocomplete="off" type="radio" name="isDeduct" id="isDeduction1" value="0" checked>
+					<label class="btn btn-outline-success col isDeductRadio @if(!$reward->isDeduct) active @endif" for="isDeduction1">
+					  <input autocomplete="off" type="radio" name="isDeduct" id="isDeduction1" value="0" @if(!$reward->isDeduct) checked @endif>
 					  
 					    مكافأة
 					</label>
 				</div>
 			</div>
-		</div>
 
+		</div>
 		<div class="row">
-			<div class="form-group col-md-6">
-				<label id="reason" for="title">سبب المكافأة *</label>
-				<input class="form-control" type="text" name="title"  id="title" placeholder="مثال:تقفيل الحسابات " required>
+			<div class="form-group col">
+				<label id="reason" for="title">سبب @if($reward->isDeduct) الخصم @else المكافأه @endif*</label>
+				<input class="form-control" type="text" name="title" id="title" placeholder="مثال:تقفيل الحسابات " value="{{$reward->title}}">
 				<small id="emailHelp" class="form-text text-danger"></small>
 			</div>
 
 			<div class="form-group col">	
 				<label for="amount">القيمة *</label>
-				<input class="form-control" type="number" name="amount" id="amount" placeholder="0.00" required>
+				<input class="form-control" type="number" name="amount" id="amount" placeholder="0.00" value="{{$reward->amount}}">
 			</div>
 		</div>
 
@@ -56,19 +57,19 @@
 
 		<div class="form-group">	
 			<label for="description">ملاحظة</label>
-			<input class="form-control" type="text" name="description" id="description" placeholder="">
+			<input class="form-control" type="text" name="description" id="description" placeholder="" value="{{$reward->description}}">
 		</div>
 
 		<div class="form-group">
 			<label id="reason" for="title">التاريخ *</label>
-			<a class="btn btn-outline-info btn-sm" tabindex onclick="$('#datepicker').data('DateTimePicker').date('{{ date("Y-m-d") }}')">إنتقل إلى تاريخ اليوم</a>
+			<a class="btn btn-outline-info btn-sm" tabindex onclick="$('#datepicker').data('DateTimePicker').date('{{ date("Y-m-d") }}')">انتقل إلى تاريخ اليوم</a>
             <div class='input-group' id='datepicker'>
-                <input type="hidden" name="date" class="form-control" value="{{ date("Y-m-d") }}">
+                <input type="hidden" name="date" class="form-control" value="{{ $reward->date }}">
             </div>
 		</div>
 		
 
-		<input class="btn btn-outline-danger btn-block mt-4 " id="submit" type="submit" value="إختر نوع العملية" disabled>
+		<input class="btn btn-warning btn-block mt-4 " id="submit" type="submit" value="تعديل العملية" >
 
 	</form>
 </div>

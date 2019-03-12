@@ -5,28 +5,57 @@
 @section('page-title',' تعديل جدول الأسبوع  '.$weeknum.' - '.$year)
 
 @section('page-nav')
-	<form class="form-inline table-responsive-lg" method="POST" action="/shifts/{{$year}}/{{ $weeknum }}">
+	<form class="form-inline table-responsive-lg" method="POST" action="/shifts/{{$table}}/{{$year}}/{{ $weeknum }}">
 	@csrf
 	@method('PATCH')
 	<input type="hidden" name="year" value="{{$year}}">
 	<input type="hidden" name="weeknum" value="{{$weeknum}}">
+	<input type="hidden" name="table" value="{{$table}}">
 	<input type="submit" class="btn font-weight-bold btn-outline-success inline-btn ml-2  btn-sm" value="تطبيق التعديلات" >
-	<a class="btn font-weight-bold btn-outline-danger inline-btn btn-sm" href="/shifts/{{$year}}/{{$weeknum}}" >إلغاء </a>
+	<a class="btn font-weight-bold btn-outline-danger inline-btn btn-sm" href="/shifts/{{$table}}/{{$year}}/{{$weeknum}}" >إلغاء </a>
 @endsection
 
 
 <?php 
+
+	$week_start = new DateTime();
+	$week_start->setISODate($year,$weeknum);
+	$week_start = $week_start->modify('-1 day');
+
 	$days = array ( 
-		1 => "الأحد", 
-		2 => "الأثنين", 
-		3 => "الثلاثاء", 
-		4 => "الإربعاء", 
-		5 => "الخميس" ,
-		6 => "الجمعة", 
-		7 => "السبت"
+		"1" => array (
+			"name" => "الأحد",
+			"date" => $week_start->format('Y-m-d')
+		),
+		"2" => array (
+			"name" => "الأثنين",
+			"date" => $week_start->modify('+1 day')->format('Y-m-d')
+		),
+		"3" => array (
+			"name" => "الثلاثاء",
+			"date" => $week_start->modify('+1 day')->format('Y-m-d')
+		),
+		"4" => array (
+			"name" => "الإربعاء",
+			"date" => $week_start->modify('+1 day')->format('Y-m-d')
+		),
+		"5" => array (
+			"name" => "الخميس",
+			"date" => $week_start->modify('+1 day')->format('Y-m-d')
+		),
+		"6" => array (
+			"name" => "الجمعة",
+			"date" => $week_start->modify('+1 day')->format('Y-m-d')
+		),
+		"7" => array (
+			"name" => "السبت",
+			"date" => $week_start->modify('+1 day')->format('Y-m-d')
+		)
+
 	);
 	$poss = array ( 1,2 );
 	$periods = array ( 1,2,3 );
+
 ?>
 
 
@@ -38,6 +67,7 @@
 		  لا توجد قيم لهذا الأسبوع
 		</div>
 	@else
+	<div class="table-responsive">
 		<table class="table table-bordered week-table" style="min-width:700px;margin-left:auto; margin-right:auto; font-size:20px;">
 			<thead class="thead-dark">
 				<tr style="text-align: right;">
@@ -50,7 +80,7 @@
 
 		@foreach ($days as $daynum => $day)
 			<tr>
-				<td class="week-day thick-border-left text-center">{{ $day }}</td>
+				<td class="week-day thick-border-left text-center">{{ $day['name'] }}<br><small style="font-size: 16px;">{{ $day['date'] }}</small></td>
 
 				@foreach ($shifts->where('day',$daynum) as $shift)
 					
@@ -65,11 +95,8 @@
 							{{-- Point of sale no. --}}
 										<h4><span class="badge badge-info text-center mt-1">{{$shift->pos}}</span></h4>
 									</div>
-							{{-- Shift Value --}}
 									<div class="from-group col-sm-10">
-										<label for="shift-value-{{$shift->id}}" class="sr-only">قيمة الدورية</label>
-										<input class="form-control form-control mb-1 shift-value" style="width:100%;" name="value-{{$shift->id}}" type="number" step="0.25" placeholder="قيمة الوردية" value="{{$shift->value}}">
-								
+
 							{{-- Cashiers List --}}
 										<label for="employee-{{$shift->id}}" class="sr-only">الكاشير</label>
 										<select class="custom-select custom-select-sm mb-2" name="employee-{{$shift->id}}" style="width:100%">
@@ -91,6 +118,10 @@
 										  		</option>
 										  	@endforeach
 										</select>
+							{{-- Shift Value --}}
+										<label for="shift-value-{{$shift->id}}" class="sr-only">قيمة الدورية</label>
+										<input class="form-control form-control mb-1 shift-value" style="width:100%;" name="value-{{$shift->id}}" type="number" step="0.25" placeholder="قيمة الوردية" value="{{$shift->value}}">
+								
 									</div>
 								</div>
 									
@@ -106,6 +137,7 @@
 	@endif
 
 		</table>
+	</div>
 	</form>
 </div>
 @endsection
