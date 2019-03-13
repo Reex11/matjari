@@ -28,7 +28,7 @@ host('46.101.229.184')
     ->identityFile('~/.ssh/deployerkey')
     ->set('deploy_path', '/var/www/alamer')
 //    ->set('deploy_path', '~/{{application}}');
-	->multiplexing(true);
+	->multiplexing(false);
 
 // Tasks
 

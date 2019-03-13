@@ -11,7 +11,7 @@ class ShiftsController extends Controller
     
 	// views
 
-	public function show($table, $year = "current", $weeknum = "current")
+	public function show($table = 1, $year = "current", $weeknum = "current")
 	{
 		// TODO : FIND OR FAIL TABLE NAME FROM TABLE OPJECT
 
