@@ -68,7 +68,9 @@
 								<td class="font-weight-bold">{{ $month->year }}-{{ sprintf("%02d", $month->month) }}</td>
 								<td>آخر حساب {{date('d-m-Y h:i', strtotime($month->updated_at)) }}@if (date('a', strtotime($month->updated_at)) === "am")ص @else م @endif</td>
 								<td>
-									<form class="my-0" style="display: inline-block;" action="/salaries/createmonth/{{ $currentDate->format('Y/m') }}" method="POST">@csrf
+									<form class="my-0" style="display: inline-block;" action="/salaries/createmonth" method="POST">@csrf
+										<input type="hidden" name="year" value="{{ $currentDate->format('Y') }}">
+										<input type="hidden" name="month" value="{{ $currentDate->format('m') }}">
 									<button class="btn btn btn-outline-info tooltipbtn" data-toggle="tooltip" data-placement="top" title="إعادة حساب"><i class="fas fa-calculator"></i></button>
 									</form>
 									<a href="/salaries/{{ $currentDate->format('Y/m') }}" class="btn btn btn-outline-info tooltipbtn" data-toggle="tooltip" data-placement="top" title="عرض"><i class="fas fa-eye"></i></a>
