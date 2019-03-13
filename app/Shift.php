@@ -18,4 +18,8 @@ class Shift extends Model
     	'value'
     ];
 
+    public function table()
+    {
+        return $this->belongsTo('App\Table');
+    }
 }

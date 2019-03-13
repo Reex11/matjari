@@ -62,11 +62,13 @@
               {{-- Tables --}}
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownTablesLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  الورديات
+                  الجداول
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownTablesLink" dir="rtl">
                     {{-- <a class="dropdown-item-text">الجداول</a> --}}
-                    <a class="dropdown-item" href="/shifts/1"><i class="fas fa-table fa-fw fa-sm ml-2"></i>جدول الكاشير</a>
+                    @foreach (App\Table::all() as $t)
+                    <a class="dropdown-item" href="/shifts/{{ $t->id }}"><i class="fas fa-table fa-fw fa-sm ml-2"></i>{{ $t->name }}</a>
+                    @endforeach
                     <a class="dropdown-item disabled" href="#"><i class="fas fa-plus-square fa-fw fa-sm ml-2"></i>إضافة جدول جديد (قريبا)</a>
                 </div>
               </li>

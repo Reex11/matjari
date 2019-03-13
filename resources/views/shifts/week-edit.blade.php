@@ -1,8 +1,8 @@
-@extends('layouts.simple')
+ @extends('layouts.simple')
 
 @section('title','| جدول الأسبوع')
 
-@section('page-title',' تعديل جدول الأسبوع  '.$weeknum.' - '.$year)
+@section('page-title',' تعديل جدول  '.$table->name.' '.$weeknum.' - '.$year)
 
 @section('page-nav')
 	<form class="form-inline table-responsive-lg" method="POST" action="/shifts/{{$table}}/{{$year}}/{{ $weeknum }}">
@@ -68,13 +68,13 @@
 		</div>
 	@else
 	<div class="table-responsive">
-		<table class="table table-bordered week-table" style="min-width:700px;margin-left:auto; margin-right:auto; font-size:20px;">
+		<table class="table table-bordered thick-border week-table d-print-block" style="min-width:700px;margin-left:auto; margin-right:auto; font-size:20px;">
 			<thead class="thead-dark">
 				<tr style="text-align: right;">
 					<th></th>
-					<th class="text-center thick-border-left" >الصباح</th>
-					<th class="text-center thick-border-left" >المساء</th>
-					<th class="text-center thick-border-left" >الليل</th>
+					@foreach ($shifts->unique('period') as $period)
+					<th class="text-center thick-border-left">الفترة  {{$period->period}}</th>
+					@endforeach
 				</tr>
 			</thead>
 

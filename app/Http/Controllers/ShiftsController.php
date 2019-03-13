@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Shift;
+use App\Table;
 use Illuminate\Http\Request;
 
 class ShiftsController extends Controller
@@ -10,32 +11,33 @@ class ShiftsController extends Controller
     
 	// views
 
-	public function show($table=1, $year = "current", $weeknum = "current")
+	public function show($table, $year = "current", $weeknum = "current")
 	{
 		// TODO : FIND OR FAIL TABLE NAME FROM TABLE OPJECT
 
+		$table = Table::findOrFail($table);
 		// Get Current
 		if ($weeknum == "current") 	$weeknum = $this->current_week();
 		if ($year == "current") 	$year = date("Y");
 
 		// Get Shifts+Employees
-		$shifts = $this->get_week($table,$year,$weeknum);
+		$shifts = $this->get_week($table->id,$year,$weeknum);
 		$employees = \App\Employee::select('id','name')->where('isCashier',true)->get();
 		return view("shifts.week-view",compact('shifts','employees','weeknum','year','table'));
 	}
 
-	public function edit($table=1,$year = "current", $weeknum = "current")
+	public function edit($table,$year = "current", $weeknum = "current")
 	{
 		if ($weeknum == "current") $weeknum = $this->current_week();
 		if ($year == "current") $year = date("Y");
-
+		$table = Table::findOrFail($table);
 		// Get Shifts+Employees
-		$shifts = $this->get_week($table,$year,$weeknum);
+		$shifts = $this->get_week($table->id,$year,$weeknum);
 		$employees = \App\Employee::select('id','name')->where('isCashier',true)->get();
 		return view("shifts.week-edit",compact('shifts','employees','weeknum','year','table'));
 	}
 
-	public function create($table = 1, $year = NULL, $weeknum = NULL, $fromyear = NULL, $fromweeknum = NULL)
+	public function create($table, $year = NULL, $weeknum = NULL, $fromyear = NULL, $fromweeknum = NULL)
 	{
 		# Default Values
 			# Get Next of latest week number
@@ -44,11 +46,11 @@ class ShiftsController extends Controller
 			if ($year == NULL) 						$year = date("Y");
 			if ($fromweeknum == NULL) 				$fromweeknum = Shift::max('week');
 			if ($fromyear == NULL)					$fromyear = date("Y");
-
+			$table = Table::findOrFail($table);
 		# Week settings
-			$days = 7; 		// TODO: TO BE CHANGED TO DEFAULT VALUE SETTING
-			$periods = 3; 	// TODO: TO BE CHANGED TO DEFAULT VALUE SETTING
-			$poss = 2; 		// TODO: TO BE CHANGED TO DEFAULT VALUE SETTING
+			$days = 7; 						// TODO: TO BE CHANGED TO DEFAULT VALUE SETTING
+			$periods = $table->periods; 	
+			$poss = $table->slots; 			
 
 		# WEEK DATES COUNTER 
 			$week_start = new \DateTime();
@@ -63,26 +65,26 @@ class ShiftsController extends Controller
 			$date[6] = $week_start->modify('+1 day')->format('Y-m-d');
 			$date[7] = $week_start->modify('+1 day')->format('Y-m-d');
 
-		if ( is_null(Shift::where("year",$fromyear)->where("week",$fromweeknum)->first()) )
+		if ( is_null(Shift::where("table",$table->id)->where("year",$fromyear)->where("week",$fromweeknum)->first()) )
 			$create_default_values = true;
 		else 
 			$create_default_values = false;
 
-		if ( !is_null(Shift::where("year",$year)->where("week",$weeknum)->first()) ) {
-			return redirect('/shifts/'.$year.'/'.$weeknum)->with('msgs',[['warning' => 'هذا الأسبوع موجود مسبقاً ، لإعادة إنشاءه قم بحذفه أولاً.']]);
+		if ( !is_null(Shift::where("table",$table->id)->where("year",$year)->where("week",$weeknum)->first()) ) {
+			return redirect('/shifts/'.$table->id.'/'.$year.'/'.$weeknum)->with('msgs',[['warning' => 'هذا الأسبوع موجود مسبقاً ، لإعادة إنشاءه قم بحذفه أولاً.']]);
 		}
 
 			if (!$create_default_values) {
-			  	
 			
 					$inhert_shifts = Shift::
-						where("year",$fromyear)
+						where("table")
+						->where("year",$fromyear)
 						->where("week",$fromweeknum)
 						->get();
 				
 				foreach ($inhert_shifts as $inhert_shift) {
 					$shift = new Shift;
-					$shift->table = $table;
+					$shift->table = $table->id;
 			  	  	$shift->year = $year;
 			  	  	$shift->week = $weeknum;
 			  	  	$shift->day = $inhert_shift->day;
@@ -105,7 +107,7 @@ class ShiftsController extends Controller
 					  	try{
 					  		
 							  	$shift = new Shift;
-							  	$shift->table = $table;
+							  	$shift->table = $table->id;
 							  	$shift->year = $year;
 							  	$shift->week = $weeknum;
 							  	$shift->day = $day;
@@ -132,7 +134,7 @@ class ShiftsController extends Controller
 
 
 
-		return redirect('/shifts/'.$table.'/'.$year.'/'.$weeknum);
+		return redirect('/shifts/'.$table->id.'/'.$year.'/'.$weeknum);
 	}
 
 
@@ -168,7 +170,7 @@ class ShiftsController extends Controller
 		return date("W",strtotime(date("w")==0?"+7 day":"+0 day"));
 	}
 
-	public function get_week($table = 1,$year = "current",$weeknum = "current")
+	public function get_week($table,$year = "current",$weeknum = "current")
 	{
 		if ($weeknum == "current") {
 			$weeknum = $this->current_week();
@@ -176,11 +178,11 @@ class ShiftsController extends Controller
 		if ($year == "current") {
 			$year = date("Y");
 		}
-
+		$table = Table::findOrFail($table);
 		$weeknum = (int)$weeknum;
 		$year = (int)$year;
 		
-		return Shift::orderBy("day")->orderBy("period")->orderBy("pos")->get()->where('table',$table)->where('week',$weeknum)->where('year',$year);
+		return Shift::orderBy("day")->orderBy("period")->orderBy("pos")->get()->where('table',$table->id)->where('week',$weeknum)->where('year',$year);
 	}
 
 	// public function isset_week($weeknum)

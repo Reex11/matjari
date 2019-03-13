@@ -2,7 +2,7 @@
 
 @section('title','| جدول الأسبوع')
 
-@section('page-title','جدول الأسبوع  '.$weeknum.'-'.$year)
+@section('page-title','جدول  '.$table->name.' '.$weeknum.'-'.$year)
 
 @section('page-nav')
 	<a class="btn btn-outline-info inline-btn btn-sm" href="/shifts/{{$table}}/{{$year}}/{{$weeknum}}/edit" ><i class="fas fa-pencil-alt ml-2"></i>تعديل الأسبوع</a>

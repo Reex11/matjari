@@ -13,17 +13,6 @@
 
 Route::get('/', 'PagesController@index');
 
-
-
-// Route::get('/employees/create','EmployeesController@create');
-// Route::post('/employees','EmployeesController@store');
-
-// Route::get('/employees/{json?}/edit','EmployeesController@edit');
-// Route::patch('/employees/{json?}','EmployeesController@update');
-
-// Route::get('/employees','EmployeesController@index');
-// Route::get('/employees/{employee}','EmployeesController@view');
-
 Route::resource('employees', 'EmployeesController');
 Route::resource('rewards', 'RewardsController');
 Route::resource('salaries', 'SalariesController');

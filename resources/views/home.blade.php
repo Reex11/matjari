@@ -88,7 +88,7 @@
                 </div>
             @endif
 
-            <div class="container-fluid">
+            <div class="content">
 
                 <div class="title">
                     متجري
