@@ -41,12 +41,12 @@ class ShiftsController extends Controller
 	{
 		# Default Values
 			# Get Next of latest week number
-			if ($weeknum == NULL) 					$weeknum = Shift::max('week')+1;
+			$table = Table::findOrFail($table);
+			if ($weeknum == NULL) 					$weeknum = Shift::where('table',$table->id)->max('week')+1;
 			// if ($weeknum < $this->current_week()) 	$weeknum = $this->current_week();
 			if ($year == NULL) 						$year = date("Y");
-			if ($fromweeknum == NULL) 				$fromweeknum = Shift::max('week');
+			if ($fromweeknum == NULL) 				$fromweeknum = Shift::where('table',$table->id)->max('week');
 			if ($fromyear == NULL)					$fromyear = date("Y");
-			$table = Table::findOrFail($table);
 		# Week settings
 			$days = 7; 						// TODO: TO BE CHANGED TO DEFAULT VALUE SETTING
 			$periods = $table->periods; 	
