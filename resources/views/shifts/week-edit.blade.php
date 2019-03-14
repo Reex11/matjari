@@ -5,14 +5,14 @@
 @section('page-title',' تعديل جدول  '.$table->name.' '.$weeknum.' - '.$year)
 
 @section('page-nav')
-	<form class="form-inline table-responsive-lg" method="POST" action="/shifts/{{$table}}/{{$year}}/{{ $weeknum }}">
+	<form class="form-inline table-responsive-lg" method="POST" action="/shifts/{{$table->id}}/{{$year}}/{{ $weeknum }}">
 	@csrf
 	@method('PATCH')
 	<input type="hidden" name="year" value="{{$year}}">
 	<input type="hidden" name="weeknum" value="{{$weeknum}}">
-	<input type="hidden" name="table" value="{{$table}}">
+	<input type="hidden" name="table" value="{{$table->id}}">
 	<input type="submit" class="btn font-weight-bold btn-outline-success inline-btn ml-2  btn-sm" value="تطبيق التعديلات" >
-	<a class="btn font-weight-bold btn-outline-danger inline-btn btn-sm" href="/shifts/{{$table}}/{{$year}}/{{$weeknum}}" >إلغاء </a>
+	<a class="btn font-weight-bold btn-outline-danger inline-btn btn-sm" href="/shifts/{{$table->id}}/{{$year}}/{{$weeknum}}" >إلغاء </a>
 @endsection
 
 
