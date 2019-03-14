@@ -45,12 +45,14 @@ class ShiftsController extends Controller
 			if ($weeknum == NULL) 					$weeknum = Shift::where('table',$table->id)->max('week')+1;
 			// if ($weeknum < $this->current_week()) 	$weeknum = $this->current_week();
 			if ($year == NULL) 						$year = date("Y");
-			if ($fromweeknum == NULL) 				$fromweeknum = Shift::where('table',$table->id)->max('week');
+			if ($fromweeknum == NULL)	if ( !is_null(Shift::where('table',$table->id)->max('week')) )		$fromweeknum = Shift::where('table',$table->id)->max('week');
 			if ($fromyear == NULL)					$fromyear = date("Y");
 		# Week settings
 			$days = 7; 						// TODO: TO BE CHANGED TO DEFAULT VALUE SETTING
 			$periods = $table->periods; 	
 			$poss = $table->slots; 			
+
+
 
 		# WEEK DATES COUNTER 
 			$week_start = new \DateTime();
@@ -70,18 +72,22 @@ class ShiftsController extends Controller
 		else 
 			$create_default_values = false;
 
+
+
 		if ( !is_null(Shift::where("table",$table->id)->where("year",$year)->where("week",$weeknum)->first()) ) {
+
 			return redirect('/shifts/'.$table->id.'/'.$year.'/'.$weeknum)->with('msgs',[['warning' => 'هذا الأسبوع موجود مسبقاً ، لإعادة إنشاءه قم بحذفه أولاً.']]);
 		}
+
+
 
 			if (!$create_default_values) {
 			
 					$inhert_shifts = Shift::
-						where("table")
+						where("table",$table->id)
 						->where("year",$fromyear)
 						->where("week",$fromweeknum)
 						->get();
-				
 				foreach ($inhert_shifts as $inhert_shift) {
 					$shift = new Shift;
 					$shift->table = $table->id;
