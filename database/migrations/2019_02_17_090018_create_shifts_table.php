@@ -19,16 +19,12 @@ class CreateShiftsTable extends Migration
             $table->year('year');
             $table->integer('week');
             $table->integer('day');
-            $table->date('date');
-            $table->unsignedInteger('period')->default(1);
-            $table->unsignedInteger('pos')->default(1);
+            $table->date('date')->nullable();
+            $table->integer('period')->default(1);
+            $table->integer('pos')->default(1);
             $table->timestamps();
-            $table->unsignedInteger('employee')->nullable();
+            $table->integer('employee_id')->nullable();
             $table->decimal('value');
-            
-            $table->foreign('employee')->references('id')->on('employees');
-            $table->index('employee'); 
-
         });
     }
 

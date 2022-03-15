@@ -6,7 +6,7 @@ require 'recipe/npm.php';
 require 'recipe/fpm.php';
 
 // Project name
-set('application', 'alamermarket');
+set('application', 'mymarket');
 
 // Project repository
 set('repository', 'reex11@bitbucket.org:reex11/alamermarket.git');
@@ -21,14 +21,28 @@ add('shared_dirs', []);
 // Writable dirs by web server 
 add('writable_dirs', []);
 
+
+
+
 // Hosts
 
-host('46.101.229.184')
+ host('alamer')
+    ->hostname('46.101.229.184')
 	->user('deployer')
     ->identityFile('~/.ssh/deployerkey')
     ->set('deploy_path', '/var/www/alamer')
-//    ->set('deploy_path', '~/{{application}}');
 	->multiplexing(false);
+
+# -------------------------
+ host('sultansweets')
+    ->hostname('46.101.229.184')
+	->user('deployer')
+    ->identityFile('~/.ssh/deployerkey')
+    ->set('deploy_path', '/var/www/sultansweets')
+	->multiplexing(false);
+
+
+
 
 // Tasks
 

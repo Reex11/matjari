@@ -30,4 +30,8 @@ Route::get('/shifts/{table}/{year}/{weeknum}/edit', 'ShiftsController@edit');
 Route::patch('/shifts/{table}/{year}/{weeknum}', 'ShiftsController@update');
 Route::get('/shifts/{table?}/{year?}/{weeknum?}', 'ShiftsController@show');
 
+Route::post('/message', 'MessageController@send');
+Route::get('/message/test', 'MessageController@test');
+
+
 //Route::get('/test/create_week', 'ShiftsController@create_week');

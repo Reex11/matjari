@@ -14,7 +14,6 @@ class Shift extends Model
     	'date',
     	'period',
     	'pos',
-    	'employee',
     	'value'
     ];
 
@@ -22,4 +21,10 @@ class Shift extends Model
     {
         return $this->belongsTo('App\Table');
     }
+
+    public function employee()
+    {
+        return $this->belongsTo('App\Employee');
+    }
+
 }

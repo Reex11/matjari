@@ -15,4 +15,13 @@ class Employee extends Model
         'deviceId'
     ];
 
+    public function shifts()
+    {
+        return $this->hasMany('App\Shift');
+    }
+
+    public function tables()
+    {
+    	return $this->belongsToMany('App\Table');
+    }
 }

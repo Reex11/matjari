@@ -123,7 +123,7 @@ class SalariesController extends Controller
         $dateto = date("Y-m-t",$date);
         $employee = Employee::findOrFail($employeeid);
         $rewards = Reward::where('employee',$employee->id)->whereBetween('created_at',[$datefrom,$dateto])->get();
-        $shifts = Shift::where('employee',$employee->id)->whereBetween('date',[$datefrom,$dateto])->get();
+        $shifts = Shift::where('employee_id',$employee->id)->whereBetween('date',[$datefrom,$dateto])->get();
         $salary = Array();
 
         $salary['constantSalary']   = $employee->constantSalary;

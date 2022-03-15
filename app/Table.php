@@ -11,4 +11,6 @@ class Table extends Model
     {
     	return $this->hasMany('App\Shift');
     }
+
+    protected $guarded = [];
 }

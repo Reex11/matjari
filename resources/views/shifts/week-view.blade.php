@@ -92,7 +92,7 @@
 				<tr style="text-align: right;">
 					<th></th>
 					@foreach ($shifts->unique('period') as $period)
-					<th class="text-center thick-border-left" colspan="2">الفترة  {{$period->period}}</th>
+					<th class="text-center thick-border-left" colspan="{{$shifts->where('period',$period->period)->max('pos')}}">الفترة  {{$period->period}}</th>
 					@endforeach
 				</tr>
 			</thead>
@@ -113,7 +113,7 @@
 						لا يوجد
 						@else
 						<div class="col-sm-12"> 
-						{{ $employees->where('id',$shift->employee)->first()->name }}
+						{{ $shift->employee->name }}
 						</div>
 						<div class="col-sm-12">
 						{{ $shift->value }}

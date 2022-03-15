@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Employee;
 use App\Shift;
 use App\Table;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class ShiftsController extends Controller
 
 		// Get Shifts+Employees
 		$shifts = $this->get_week($table->id,$year,$weeknum);
-		$employees = \App\Employee::select('id','name')->where('isCashier',true)->get();
+		$employees = Employee::where('isCashier',true)->get();
 		return view("shifts.week-view",compact('shifts','employees','weeknum','year','table'));
 	}
 
@@ -33,11 +34,11 @@ class ShiftsController extends Controller
 		$table = Table::findOrFail($table);
 		// Get Shifts+Employees
 		$shifts = $this->get_week($table->id,$year,$weeknum);
-		$employees = \App\Employee::select('id','name')->where('isCashier',true)->get();
+		$employees = Employee::where('isCashier',true)->get();
 		return view("shifts.week-edit",compact('shifts','employees','weeknum','year','table'));
 	}
 
-	public function create($table, $year = NULL, $weeknum = NULL, $fromyear = NULL, $fromweeknum = NULL)
+	public static function create($table, $year = NULL, $weeknum = NULL, $fromyear = NULL, $fromweeknum = NULL)
 	{
 		# Default Values
 			# Get Next of latest week number
@@ -97,7 +98,7 @@ class ShiftsController extends Controller
 			  	  	$shift->date = $date[$inhert_shift->day];
 			  	  	$shift->period = $inhert_shift->period;
 			  	  	$shift->pos = $inhert_shift->pos;
-					$shift->employee = $inhert_shift->employee;
+					$shift->employee_id = $inhert_shift->employee_id;
 			  		$shift->value = $inhert_shift->value; 
 			  		 
 			  	  	$shift->save();
@@ -120,13 +121,13 @@ class ShiftsController extends Controller
 							  	$shift->date = $date[$day];
 							  	$shift->period = $period;
 							  	$shift->pos = $pos;
-								$shift->employee = NULL; 
+								$shift->employee_id = NULL; 
 								$shift->value = 75; 
 
 							  	$shift->save();
 						}
 						catch(\Exception $e) {
-					  	    echo $e->getMessage();   // insert query
+					  	    report($e->getMessage());   // insert query
 					  	}
 
 					  }
@@ -156,15 +157,15 @@ class ShiftsController extends Controller
 		$table = request('table');
 		$year = request('year');
 		$weeknum = request('weeknum');
-
+					$employees = [];
 		foreach ($shifts as $id => $new) {
 			$shift = Shift::find($id);
 			$shift->value = $new['value'];
-
-			$shift->employee = $new['employee'];
+			$employee = Employee::find($new['employee']);
+			$shift->employee_id = $employee ? $employee->id : NULL;
 			$shift->save();
 		}
-		
+		// dd([$shifts_]);
 		return redirect("/shifts/".$table."/".$year."/".$weeknum);
 	}
 

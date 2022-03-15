@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddDateFieldToShiftsTable extends Migration
+class RenameEmployeeColumn extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class AddDateFieldToShiftsTable extends Migration
      */
     public function up()
     {
-        Schema::table('shifts', function (Blueprint $table) {
-            //  $table->date('date')->nullable();
-            //  $table->string('table')->default(1)->nullable();
-            //  $table->index('employee'); 
+        Schema::table('shifts', function(Blueprint $table) {
+            // $table->renameColumn('employee', 'employee_id');
         });
     }
 
@@ -27,8 +25,8 @@ class AddDateFieldToShiftsTable extends Migration
      */
     public function down()
     {
-        // Schema::table('shifts', function (Blueprint $table) {
-        //     //
-        // });
+        Schema::table('shifts', function(Blueprint $table) {
+            // $table->renameColumn('employee_id', 'employee');
+        });
     }
 }

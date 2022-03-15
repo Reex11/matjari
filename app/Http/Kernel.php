@@ -3,6 +3,8 @@
 namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Client;
 
 class Kernel extends HttpKernel
 {
@@ -58,4 +60,26 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
     ];
+
+    protected function schedule(Schedule $schedule)
+    {
+        $schedule->call(function () {
+            
+            $msg    = request()->message;
+            $phone  = request()->phone;
+
+            $client = new Client(); //GuzzleHttp\Client
+
+            $res = $client->request('POST', 'https://en7xlvqec255h.x.pipedream.net', [
+                'body' => '{"phone":"+966552748566","message":"أهلا .. موعد دوامك يبدأ بعد خمس دقائق"}',
+                'headers' => [
+                        'token' => '11ae87fe6fcf4ec19e72e98897a495fabc43b29ea0a1f17b912bbd12b592e0b3bf799cd68e173074',
+                        'content-type' => 'application/json'
+                    ]
+            ]);
+
+            return $res;
+
+        })->everyMinute(); //})->everyFiveMinutes();
+    }
 }

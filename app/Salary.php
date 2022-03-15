@@ -18,4 +18,9 @@ class Salary extends Model
         	'total'
         ];
 
+        public function employee()
+        {
+            return $this->belongsTo('App\Employee');
+        }
+
 }
